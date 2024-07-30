@@ -1,0 +1,10 @@
+.table-container {
+    margin: 20px;
+}
+table {
+    width: 100%;
+}
+table tr th {
+    text-align: left;
+    background-color: #D9E2EC;
+}
