@@ -1,44 +1,44 @@
 <?php
-// Set up the database connection as you like
-$dbconn = pg_connect("user=postgres dbname=emergency_waitlist");
-if (!$dbconn) {
-    echo "Failed to connect to database";
-    exit;
-}
-$result = pg_query($dbconn, "SELECT * FROM patients");
-if (!$result) {
-    echo "Failed to query database";
-    exit;
-}
-$data = pg_fetch_all($result);
-?>
+require_once('_config.php');
 
-<style>
-.table-container {
-    margin: 20px;
-}
-table {
-    width: 100%;
-}
-table tr th {
-    text-align: left;
-    background-color: #D9E2EC;
-}
-</style>
+// Set up app
 
-<div class="table-container">
-    <table>
-        <tr>
-            <th>patient_name</th>
-            <th>severity</th>
-            <th>date_triage</th>
-        </tr>
-        <?php foreach ($data as $row) {?>
-            <tr>
-                <td><?php echo $row["patient_name"] ?></td>
-                <td><?php echo $row["severity"] ?></td>
-                <td><?php echo $row["date_triage"] ?></td>
-            </tr>
-        <?php } ?>
-    </table>
-</div>
+use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ServerRequestInterface as Request;
+use Slim\Factory\AppFactory;
+
+$app = AppFactory::create();
+
+// Helper functions
+
+function jsonReply(Response $response, $data) {
+    $payload = json_encode($data);
+    $response->getBody()->write($payload);
+    return $response->withHeader('Content-Type', 'application/json; charset=utf-8');
+}
+
+function queryDb($query) {
+    // Set up the database connection as you like
+    $dbconn = pg_connect("user=postgres dbname=emergency_waitlist");
+    if (!$dbconn) return "Failed to connect to database";
+    $result = pg_query($dbconn, $query);
+    if (!$result) return "Failed to query database";
+    $data = pg_fetch_all($result);
+    pg_close($dbconn);
+    return $data;
+}
+
+// General API calls
+
+$app->get('/', function (Request $request, Response $response, $args) {
+    $view = file_get_contents("{$GLOBALS["appDir"]}/views/index.html");
+    $response->getBody()->write($view);
+    return $response;
+});
+
+$app->get('/api/getpatients', function (Request $request, Response $response, $args) {
+    $data = queryDb("SELECT * FROM patients");
+    return jsonReply($response, $data);
+});
+
+$app->run();
