@@ -12,6 +12,7 @@
                 let tr = patients.insertRow();
                 tr.insertCell().innerHTML = elem.patient_name;
                 tr.insertCell().innerHTML = elem.severity;
+                tr.insertCell().innerHTML = elem.staff_name;
                 tr.insertCell().innerHTML = elem.date_triage;
             }
         });

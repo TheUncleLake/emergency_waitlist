@@ -28,7 +28,10 @@ $app->get('/', function (Request $request, Response $response, $args) {
 });
 
 $app->get('/api/getpatients', function (Request $request, Response $response, $args) {
-    $data = ConnectionDB::queryDb("SELECT * FROM patients");
+    $data = ConnectionDB::queryDb(
+        "SELECT patient_name, severity, staff_name, date_triage FROM patients
+        LEFT JOIN staff ON patients.staff_id = staff.staff_id"
+    );
     return jsonReply($response, $data);
 });
 
