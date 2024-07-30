@@ -58,7 +58,7 @@ The output should be similar to the following.
 
 ### PHP 8.1+
 
-To start the PHP server locally, run the following commands from the root of the project. Note: better do that while still logged in as `postgres` or there is a risk of authentication failure in database connection.
+To start the PHP server locally, run the following commands from the root of the project. Note: It might be better to do that while still logged in as `postgres` or there is a risk of authentication failure in database connection. You may change the setup of the database connection from `pg_connect()` method in `index.php`.
 
 ```bash
 (cd public && php -S localhost:4000)
