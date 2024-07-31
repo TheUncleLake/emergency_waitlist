@@ -1,5 +1,29 @@
+body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    font-size: large;
+}
+
+.header {
+    padding: 10px 16px;
+    background: #555;
+    color: #f1f1f1;
+    height: 2rem;
+}
+
+button {
+    height: 2rem;
+}
+
+.right {
+    float: right;
+    margin-right: 20px;
+}
+
 .table-container {
-    margin: 20px;
+    margin: 30px;
 }
 table {
     width: 100%;

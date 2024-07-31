@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Hospital Triage application helps staff and patients better understand wait times while in the emergency room. The application will be administered by the triage staff based on two dimensions: severity of injuries and the length of time already in the queue. Administrators will see the full list of patients.
+The Hospital Triage application helps staff and patients better understand wait times while in the emergency room. The application will be administered by the triage staff based on two dimensions: severity of injuries and the length of time already in the queue. Administrators will see the full list of patients, but users can sign-in with their name and 3-letter code showing an approximate wait time, which is updated as patients are treated.
 
 ## Resources
 
@@ -23,9 +23,9 @@ sudo apt install postgresql-client
 
 ### PostgreSQL 14+
 
-To set up the database locally, first log in as `postgres`, i.e. `sudo -u postgres -i`, if you have not already.
+To set up the database locally, first log in as `postgres`, i.e. `sudo -u postgres -i`, if not already.
 
-We now create the database `emergency_waitlist` needed for the application.
+We now create the database `emergency_waitlist` needed for the application, if not already.
 
 ```bash
 psql -c "create database emergency_waitlist"
@@ -64,6 +64,6 @@ To start the PHP server locally, run the following commands from the root of the
 (cd public && php -S localhost:4000)
 ```
 
-Note: It might be better to do that while still logged in as `postgres` or there is a risk of authentication failure in the database connection. You may change the setup of the database connection from the `pg_connect()` method in `app/models/ConnectionDB.php`.
+Note: It might be better to do that while still logged in as `postgres` or there is a risk of authentication failure in the database connection. You may change the setup of the database connection from the `pg_connect()` method in `app/models/ConnectionDB.php` as desired.
 
-The server is now hosted in http://localhost:4000/.
+The server is hosted in http://localhost:4000/.

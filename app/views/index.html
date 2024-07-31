@@ -1,14 +1,19 @@
+<!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8">
+        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Student's Emergency Waitlist</title>
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <link rel="stylesheet" type="text/css" href="assets/styles.css">
+        <script defer type="text/javascript" src="assets/script.js"></script>
     </head>
     <body>
+        <div class="header">Hospital Triage
+            <button id="login" type="button" class="right">Login</button>
+        </div>
         <div class="table-container">
-            <button id="getpatients">Get Patients</button>
+            <button id="getpatients" type="button">Get Patients</button>
             <table>
                 <thead>
                     <tr>
@@ -21,6 +26,5 @@
                 <tbody id="patients"></tbody>
             </table>
         </div>
-        <script src="assets/script.js"></script>
     </body>
 </html>
