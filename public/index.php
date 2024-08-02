@@ -1,9 +1,18 @@
 <?php
 require_once('_config.php');
 
-// Set up app
+session_start();
 
-use EmergencyWaitlist\ConnectionDB;
+use EmergencyWaitlist\{ConnectionDB, User};
+
+if (User::isLoggedIn()) {
+    $uname = &$_SESSION['uname'];
+    $code = &$_SESSION['code'];
+} else {
+    $_SESSION = array();
+}
+
+// Set up app
 
 use Psr\Http\Message\ResponseInterface as Response;
 use Psr\Http\Message\ServerRequestInterface as Request;
@@ -28,6 +37,8 @@ $app->get('/', function (Request $request, Response $response, $args) {
 });
 
 $app->get('/api/getpatients', function (Request $request, Response $response, $args) {
+    if (!User::isAdmin())
+        return $response->withStatus(401); // Unauthorized
     $data = ConnectionDB::queryDb(
         "SELECT patient_name, severity, staff_name, date_triage FROM patients
         LEFT JOIN staff ON patients.staff_id = staff.staff_id"
