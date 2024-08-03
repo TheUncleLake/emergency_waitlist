@@ -9,22 +9,17 @@
         <script defer type="text/javascript" src="assets/script.js"></script>
     </head>
     <body>
-        <div class="header">Hospital Triage
-            <button id="login" type="button" class="right">Login</button>
-        </div>
-        <div class="table-container">
-            <button id="getpatients" type="button">Get Patients</button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>patient_name</th>
-                        <th>severity</th>
-                        <th>staff_name</th>
-                        <th>date_triage</th>
-                    </tr>
-                </thead>
-                <tbody id="patients"></tbody>
-            </table>
-        </div>
+        <div class="header">Hospital Triage</div>
+        <form action="/" method="post">
+            <div class="container">
+                <label for="uname"><b>Full Name</b></label>
+                <input type="text" placeholder="Enter Name" name="uname" required>
+                <br>
+                <label for="code"><b>3-letter Code</b></label>
+                <input type="text" placeholder="Enter 3-letter code" name="code" required>
+                <br>
+                <button type="submit">Login</button>
+            </div>
+        </form>
     </body>
 </html>

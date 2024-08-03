@@ -31,7 +31,14 @@ function jsonReply(Response $response, $data) {
 // General API calls
 
 $app->get('/', function (Request $request, Response $response, $args) {
-    $view = file_get_contents("{$GLOBALS["appDir"]}/views/index.html");
+    $view = file_get_contents("{$GLOBALS["appDir"]}/views/login.html");
+    $response->getBody()->write($view);
+    return $response;
+});
+
+$app->post('/', function (Request $request, Response $response, $args) {
+    $post = $request->getParsedBody();
+    $view = file_get_contents("{$GLOBALS["appDir"]}/views/login.html");
     $response->getBody()->write($view);
     return $response;
 });
