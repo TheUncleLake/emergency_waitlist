@@ -67,3 +67,19 @@ To start the PHP server locally, run the following commands from the root of the
 Note: It might be better to do that while still logged in as `postgres` or there is a risk of authentication failure in the database connection. You may change the setup of the database connection from the `pg_connect()` method in `app/models/ConnectionDB.php` as desired.
 
 The server is hosted in http://localhost:4000/.
+
+## How to Use
+
+This website requires logging in to use it.
+
+### Patient
+
+To log in as a patient, choose the option to sign in as a Patient and enter the name (which must exist in the database).
+
+After logging in, the patient can see the rest of the information about the triage. The patient can log out at anytime.
+
+### Admin
+
+To log in as an admin, choose the option to sign in as an Admin and enter the correct username and password.
+
+The correct username is `admin` and the correct password is `password`. After logging in, the admin can click the "Get Patients" button to fetch or refresh the list of all patients in the database. The admin can log out at anytime.
