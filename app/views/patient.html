@@ -6,25 +6,23 @@
         <title>Student's Emergency Waitlist</title>
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <link rel="stylesheet" type="text/css" href="assets/styles.css">
-        <script defer type="text/javascript" src="assets/script.js"></script>
+        <script defer type="text/javascript" src="assets/patient.js"></script>
     </head>
     <body>
         <div class="header">Hospital Triage
-            <button id="logout" type="button" class="right">Log out</button>
+            <form action="/" method="post" class="right">
+                <button type="submit" name="logout">Log out</button>
+            </form>
         </div>
         <div class="container">
-            <button id="getpatients" type="button">Get Patients</button>
-            <table>
-                <thead>
-                    <tr>
-                        <th>patient_name</th>
-                        <th>severity</th>
-                        <th>staff_name</th>
-                        <th>date_triage</th>
-                    </tr>
-                </thead>
-                <tbody id="patients"></tbody>
-            </table>
+            <img src="assets/user-picture-default.png" alt="Default user profile picture">
+            <h2>Patient Profile</h2>
+            <p>Your name: <span id="name"></span></p>
+            <div id="info" class="hidden">
+                <p>Severity: <span id="severity"></span></p>
+                <p>Date of triage: <time id="datetriage"></time></p>
+            </div>
+            <p id="notriage" class="hidden">You have not been triaged yet. Be patient.</p>
         </div>
     </body>
 </html>

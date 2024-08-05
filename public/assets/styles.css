@@ -17,6 +17,11 @@ body {
     display: none;
 }
 
+img {
+    float: left;
+    margin-right: 20px;
+}
+
 .red {
     color: darkred;
 }

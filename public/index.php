@@ -39,6 +39,11 @@ $app->get('/', function (Request $request, Response $response, $args) {
 
 $app->post('/', function (Request $request, Response $response, $args) {
     $post = $request->getParsedBody();
+    // Logout
+    if (isset($post['logout'])) {
+        $_SESSION = array();
+        goto finish_login;
+    }
     if (isset($post['uname']) && strlen($post['uname']) <= 20 && preg_match('/^[A-Za-z ]+$/', $post['uname'])) {
         // Patient login
         if (isset($post["patientlogin"])) {
@@ -71,6 +76,16 @@ $app->get('/api/getpatients', function (Request $request, Response $response, $a
     $data = ConnectionDB::queryDb(
         "SELECT patient_name, severity, staff_name, date_triage FROM patients
         LEFT JOIN staff ON patients.staff_id = staff.staff_id"
+    );
+    return jsonReply($response, $data);
+});
+
+$app->get('/api/getinfo', function (Request $request, Response $response, $args) {
+    if (!User::isPatient())
+        return $response->withStatus(401); // Unauthorized
+    $data = ConnectionDB::queryDb(
+        "SELECT patient_name, severity, date_triage FROM patients
+        WHERE patient_name = '{$_SESSION["uname"]}'"
     );
     return jsonReply($response, $data);
 });
