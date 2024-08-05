@@ -2,7 +2,7 @@
 
 ## Overview
 
-The Hospital Triage application helps staff and patients better understand wait times while in the emergency room. The application will be administered by the triage staff based on two dimensions: severity of injuries and the length of time already in the queue. Administrators will see the full list of patients, but users can sign-in with their name and 3-letter code showing an approximate wait time, which is updated as patients are treated.
+The Hospital Triage application helps staff and patients better understand wait times while in the emergency room. The application will be administered by the triage staff based on two dimensions: severity of injuries and the length of time already in the queue. Administrators will see the full list of patients, and users can sign-in with their name.
 
 ## Resources
 

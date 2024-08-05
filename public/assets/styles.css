@@ -13,6 +13,10 @@ body {
     height: 2rem;
 }
 
+.hidden {
+    display: none;
+}
+
 button {
     height: 2rem;
 }
