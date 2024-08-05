@@ -17,6 +17,10 @@ body {
     display: none;
 }
 
+.red {
+    color: darkred;
+}
+
 button {
     height: 2rem;
 }

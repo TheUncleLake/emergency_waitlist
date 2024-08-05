@@ -5,13 +5,6 @@ session_start();
 
 use EmergencyWaitlist\{ConnectionDB, User};
 
-if (User::isLoggedIn()) {
-    $uname = &$_SESSION['uname'];
-    $code = &$_SESSION['code'];
-} else {
-    $_SESSION = array();
-}
-
 // Set up app
 
 use Psr\Http\Message\ResponseInterface as Response;
@@ -31,16 +24,45 @@ function jsonReply(Response $response, $data) {
 // General API calls
 
 $app->get('/', function (Request $request, Response $response, $args) {
-    $view = file_get_contents("{$GLOBALS["appDir"]}/views/login.html");
+    if (User::isPatient())
+        $view = file_get_contents("{$GLOBALS["appDir"]}/views/patient.html");
+    elseif (User::isAdmin())
+        $view = file_get_contents("{$GLOBALS["appDir"]}/views/admin.html");
+    elseif (isset($_SESSION["invalid"])) {
+        unset($_SESSION["invalid"]);
+        $view = file_get_contents("{$GLOBALS["appDir"]}/views/logininvalid.html");
+    }
+    else $view = file_get_contents("{$GLOBALS["appDir"]}/views/login.html");
     $response->getBody()->write($view);
     return $response;
 });
 
 $app->post('/', function (Request $request, Response $response, $args) {
     $post = $request->getParsedBody();
-    $view = file_get_contents("{$GLOBALS["appDir"]}/views/login.html");
-    $response->getBody()->write($view);
-    return $response;
+    if (isset($post['uname']) && strlen($post['uname']) <= 20 && preg_match('/^[A-Za-z ]+$/', $post['uname'])) {
+        // Patient login
+        if (isset($post["patientlogin"])) {
+            $data = ConnectionDB::queryDb("SELECT 1 FROM patients WHERE patient_name = '{$post["uname"]}'");
+            if (is_string($data)) {
+                $response->getBody()->write($data);
+                return $response->withStatus(500); // Internal Server Error
+            }
+            elseif (empty($data)) goto invalid_login;
+            $_SESSION['uname'] = $post['uname'];
+            goto finish_login;
+        // Admin login
+        } elseif (isset($post["adminlogin"])) {
+            if ($post['uname'] != User::$adminUsername || !isset($post['pass']) || $post['pass'] != User::$adminPassword)
+                goto invalid_login;
+            $_SESSION['uname'] = $post['uname'];
+            $_SESSION['pass'] = $post['pass'];
+            goto finish_login;
+        }
+    }
+    invalid_login:
+    $_SESSION["invalid"] = true;
+    finish_login:
+    return $response->withHeader('Location', '/')->withStatus(302); // Redirect
 });
 
 $app->get('/api/getpatients', function (Request $request, Response $response, $args) {
